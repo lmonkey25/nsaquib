@@ -1,0 +1,111 @@
+<section class="container">
+    <section data-ng-init="getJournal()">
+        <div class="page-header newJournal__header">
+            <h1>
+                <a data-ng-href="/#!/journal2/{{journal._id}}">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    Back to journal
+                </a>
+                <span>Add content</span>
+            </h1>
+        </div>
+        <div class="alert alert-dismissible"
+             role="alert"
+             data-ng-if="info.status"
+             data-ng-class="{'alert-{{info.status}}': info.status}">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true" data-ng-click="closeAlert()">&times;</span>
+            </button>
+            {{info.message}}
+        </div>
+        <form name="addContent" action="" class="col-md-12 newJournal">
+            <div class="newJournal__content">
+                <div class="content__title">
+                    <p class="center">Content</p>
+                    <div class="row">
+                        <div class="col-sm-6 col-ur form-group">
+                            <label for="content__title--ur" >Urdu title</label>
+                            <input id="content__title--ur" type="text" class="form-control" name="content__title--ur" data-ng-model="journal.add.title" required/>
+                        </div>
+                    </div>
+                </div>
+                <!-- author -->
+                <div class="row">
+                    <div class="col-sm-3 col-ur">
+                        <span>Author</span>
+                        <ui-select ng-model="journal.add.author" theme="bootstrap" required>
+                            <ui-select-match placeholder="Select author...">{{$select.selected.displayName}}</ui-select-match>
+                            <ui-select-choices repeat="item in authors | filter: $select.search">
+                                <div ng-bind-html="item.displayName | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+                <div class="content__body">
+                    <div class="row">
+                        <div class="col-sm-6 col-ur form-group">
+                            <label for="content__body--ur">Urdu body</label>
+                            <textarea id="content__body--ur" class="form-control" name="content__body--ur" data-ng-model="journal.add.body" required>
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__category">
+                    <div class="row">
+                        <div class="col-sm-6 form-group col-ur">
+                            <label for="categories">Urdu Category</label>
+                            <div class="list-group-item" ng-repeat="category in categories track by $index">
+                                <button class="close pull-right" type="button" style="position: relative; z-index: 20;" ng-click="deleteContentArray('categories',$index)" ng-hide="form.readonly">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                                <input type="text" class="form-control" ng-model="category.name" required/>
+                            </div>
+                            <button class="btn btn-default pull-right" ng-click="addContentArray('categories')">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__keywords">
+                    <div class="row">
+                        <div class="col-sm-6 form-group col-ur">
+                            <label for="keywords">Urdu Keywords</label>
+                            <div class='list-group-item' ng-repeat="keyword in keywords track by $index">
+                                <button class="close pull-right" type="button" style="position: relative; z-index: 20;" ng-click="deleteContentArray('keywords',$index)" ng-hide="form.readonly">
+                                    <span aria-hidden="true">×</span>
+                                    <span class="sr-only">Close</span>
+                                </button>
+                                <input type="text" class="form-control" ng-model="keyword.name" required/>
+                            </div>
+                            <button class="btn btn-default pull-right" ng-click="addContentArray('keywords')">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content__status">
+                    <div class="row">
+                        <div class="col-sm-6 form-group col-ur">
+                            <label for="status">Status</label>
+                            <select name="status"
+                                    class="form-control"
+                                    id="status"
+                                    data-ng-options="s as s for s in ['draft', 'open', 'closed']"
+                                    data-ng-model="journal.add.status"
+                                    required>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="newJournal__action">
+                    <a class="btn btn-primary" data-ng-click="save()" data-ng-class="{disabled: !addContent.$valid}" data-ng-if="!isCreating">Add</a>
+                </div>
+            </div>
+
+        </form>
+    </section>
+</section>

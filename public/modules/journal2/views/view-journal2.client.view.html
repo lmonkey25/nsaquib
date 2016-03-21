@@ -1,0 +1,207 @@
+<section class="container journal2" data-ng-show="journal2">
+    <section data-ng-init="findOne()">
+        <div class="row">
+            <div data-ng-class="{'col-sm-9': !isAffixNow, 'col-sm-12': isAffixNow}">
+                <div class="page-header" data-ng-if="!canEdit">
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <h3 data-ng-bind="journal2.year"></h3>
+                            <h3 data-ng-bind="journal2.month"></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <p data-ng-bind="journal2.month"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <p data-ng-bind="journal2.month"></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <div id="begin" class="journal2-article">
+                                <h4 data-ng-bind="content.title"></h4>
+                                <div ng-bind-html="content.author.displayName"></div>
+                                <div ng-bind-html="content.body" setcontprop="article2-{{content._id}}" cm-select="article2-{{content._id}}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Here comes the code for Editor/Reviwer -->
+                <div class="page-header no-animate" data-ng-if="canEdit">
+                    <ul class="nav nav-tabs">
+                        <li role="presentation" class="active"><a title="View page">View</a></li>
+                        <li role="presentation">
+                            <a data-ng-href="{{editUrl}}" title="Edit journal2">
+                                <i class="glyphicon glyphicon-edit"></i>
+                                Edit
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-ng-href="/#!/journal2/{{journal2._id}}/add" title="Add content">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                Add
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a title="Close journal" data-ng-click="close();" data-ng-show="(journal2.status === 'open')">
+                                <i class="glyphicon glyphicon-remove"></i>
+                                Close
+                            </a>
+                            <a title="Open journal" data-ng-click="open();" data-ng-show="(journal2.status !== 'open')">
+                                <i class="glyphicon glyphicon-ok"></i>
+                                Open
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a data-ng-click="remove();" data-ng-show="Roles.hasAtLeastRole('admin')" title="Delete journal">
+                                <i class="glyphicon glyphicon-trash"></i>
+                                Delete
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="pull-right right" data-ng-show="canEdit">
+                            <strong>Views:</strong>
+                            <span data-ng-show="canEdit" data-ng-bind="journal2.views"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <h3 data-ng-bind="journal2.year"></h3>
+                        </div>
+                    </div>
+                    <div class="row mar-b-15">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <p data-ng-bind="journal2.month"></p>
+                        </div>
+                    </div>
+
+                    <div class="row mar-b-15">
+                        <div class="col-sm-12" data-ng-class="col-ur">
+                            <div class="book-article" id="begin">
+                                <h4 data-ng-bind="content.title"></h4>
+                                <div ng-bind-html="content.author.displayName"></div>
+                                <div ng-bind-html="content.body" setcontprop="article2-{{content._id}}" cm-select="article2-{{content._id}}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-ng-class="{'col-sm-3': !isAffixNow}" affix>
+                <div data-ng-class="{'container': isAffixNow}">
+                    <div class="sub-nav clearfix">                        
+                            <div class="col-sm-2 no-pad">
+                            <div class="hed-base smenu-title-en">
+                                <h4 data-ng-bind="journal2.year"></h4>
+                            </div>
+                            </div>
+                            <div class="col-sm-1 no-pad">
+                            </div>
+                            <div class="col-sm-2 no-pad">
+                            <div data-addthis-toolbox
+                                 data-url="{{MetaInformation.getUrl()}}"
+                                 data-title="{{PageTitle.title()}}"
+                                 data-ng-class="{'addthis_24x24_style': isAffixNow, 'addthis_32x32_style': !isAffixNow}"
+                                 class="addthis_toolbox addthis_default_style ">
+                                <a href class="addthis_button_facebook"></a>
+                                <a href class="addthis_button_twitter"></a>
+                            </div>  
+                            </div>
+                            <div class="col-sm-6 no-pad">                  
+                            <div class="top-nav__chapters-wrapper">
+                                <div class="articles" data-ng-if="isAffixNow">
+                                    <h5 data-ng-if="menuTitle.article.title">
+                                        {{menuTitle.article.title}}
+                                        <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                    </h5>
+                                </div>
+                            </div>
+                            </div>
+                        <div class="col-sm-1 responsive-menu text-center pull-right no-pad" data-ng-show="isAffixNow">
+                            <a href="" class="fa fa-list-ul fa-2x" data-ng-click="showMenu = !showMenu"></a>
+                            <div class="menu" data-ng-show="showMenu">
+                                <ul class="list-unstyled">
+                                    <li data-ng-repeat="article in journal2.tableOfContents">
+                                        <a href="#begin" data-ng-click="switchArticle($index)"
+                                           du-smooth-scroll
+                                           offset="90">
+                                            <span data-ng-bind="article.title"></span>
+                                            <span class="glyphicon glyphicon-menu-right" aria-hidden="true"><</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div> <!-- /.menu -->
+                        </div> <!-- /.responsive-menu -->
+                    </div>
+                    <div class="side-nav clearfix">                        
+                        <div class="top-nav__left">
+                            <div data-addthis-toolbox
+                                 data-url="{{MetaInformation.getUrl()}}"
+                                 data-title="{{PageTitle.title()}}"
+                                 data-ng-class="{'addthis_24x24_style': isAffixNow, 'addthis_32x32_style': !isAffixNow}"
+                                 class="addthis_toolbox addthis_default_style ">
+                                <a href class="addthis_button_facebook"></a>
+                                <a href class="addthis_button_twitter"></a>
+                            </div>
+                            <p>Table of contents</p>                          
+                            <div class="top-nav__articles-wrapper">
+                                <ul class="list-unstyled articles" ng-if="!isAffixNow">
+                                    <li data-ng-repeat="article in journal2.tableOfContents">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <a data-ng-click="switchArticle($index)">
+                                                    <span data-ng-bind="article.title"></span>
+                                                    <span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
+                                                </a>
+                                            </div>
+                                            <div class="col">
+                                                <button class="btn" data-ng-click="deleteArticle($index)" data-ng-show="Roles.hasAtLeastRole('admin')">
+                                                    <i class="glyphicon glyphicon-remove"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                                <!-- Categories are common -->
+                                <div class="col-sm-12 hidden-xs">
+                                    <div class="aside">
+                                        <div class="hed-base hed-base-en">
+                                            <h5>Categories</h5>
+                                        </div>
+                                        <nav class="bs-docs-sidebar">
+                                            <ul id="sidebar" class="nav nav-stacked">
+                                                <li data-ng-repeat="c in content.categories">
+                                                    <!--<a data-ng-href="/journal2?category={{c}}"
+                                                       data-ng-bind="c"></a>-->
+                                                    <label data-ng-bind="c"></label>
+                                                </li>
+                                            </ul>
+                                        </nav>                      
+                                    </div>
+                                </div>
+                                <!-- Keywords are common -->
+                                <div class="col-sm-12 hidden-xs">
+                                    <div class="aside">
+                                        <div class="hed-base hed-base-en">
+                                            <h5>Keywords</h5>
+                                        </div>
+                                        <nav class="bs-docs-sidebar">
+                                            <ul id="sidebar" class="nav nav-stacked">
+                                                <li data-ng-repeat="c in content.keywords">
+                                                    <!--<a data-ng-href="/journal2?category={{c}}"
+                                                       data-ng-bind="c"></a>-->
+                                                    <label data-ng-bind="c"></label>
+                                                </li>
+                                            </ul>
+                                        </nav>                      
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

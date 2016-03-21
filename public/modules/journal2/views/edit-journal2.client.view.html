@@ -1,0 +1,151 @@
+<section class="container">
+    <section>
+        <div class="page-header newJournal__header">
+            <h1>
+                <a data-ng-href="/#!/{{backUrl}}" data-ng-if="journal2._id">
+                    <i class="glyphicon glyphicon-arrow-left"></i>
+                    Back to journal
+                </a>
+                <span data-ng-if="journal2._id">Edit journal</span>
+                <span data-ng-if="!journal2._id">New Journal</span>
+            </h1>
+        </div>
+        <form name="newJournal" action="" class="col-md-12 newJournal">
+            <div class="newJournal__options">
+                <div class="row">
+                    <div class="col-sm-6 col-ur form-group">
+                        <label for="month-ur" >Urdu month</label>                        
+                        <select name="month-ur"
+                                class="form-control"
+                                id="month-ur"
+                                data-ng-options="s as s for s in ['January', 'February', 'March', 'April', 'May', 'June',
+                                'July', 'August', 'September', 'October', 'November', 'December']"
+                                data-ng-model="journal2.month"
+                                required>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="newJournal__options">
+                <div class="row">
+                    <div class="col-sm-6 col-ur form-group">
+                        <label for="year-ur" >Urdu year</label>
+                        <input id="year-ur" type="text" class="form-control" name="year-ur" data-ng-model="journal2.year" required/>
+                    </div>
+                </div>
+            </div>
+            <div class="newJournal__options">
+                    <div class="col-sm-2 col-ur">
+                        <div class="row">
+                            <label for="status">Status</label>
+                            <select name="status"
+                                    class="form-control"
+                                    id="status"
+                                    data-ng-options="s as s for s in ['draft', 'open', 'closed']"
+                                    data-ng-model="journal2.status"
+                                    required>
+                            </select>
+                        </div>
+                    </div>
+            </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="row">
+
+                        <div class="newJournal__content" data-ng-if="!isCreating">
+                            <div class="content__title">
+                                <p>Content</p>
+                                <div class="row">
+                                    <div class="col-sm-6 col-ur form-group">
+                                        <label for="content__title--ur" >Urdu title</label>
+                                        <input id="content__title--ur" type="text" class="form-control" name="content__title--ur" data-ng-model="journal2.content.title" required/>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- author -->
+                            <div class="row">
+                                <div class="col-sm-3 col-ur">
+                                    <label>{{$select.selected.displayName}}</label>
+                                    <span>Author</span>
+                                    <ui-select ng-model="journal2.content.author" theme="bootstrap">
+                                        <ui-select-match placeholder="Select author...">{{$select.selected.displayName}}</ui-select-match>
+                                        <ui-select-choices repeat="item in authors | filter: $select.search">
+                                            <div ng-bind-html="item.displayName | highlight: $select.search"></div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </div>
+                            </div>
+                            <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+                            <div class="content__body">
+                                <div class="row">
+                                    <div class="col-sm-6 col-ur form-group">
+                                        <label for="content__body--ur">Urdu body</label>
+                                        <textarea id="content__body--ur" class="form-control" name="content__body--ur" data-ng-model="journal2.content.body" required>
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content__category">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group col-ur">
+                                        <label for="categories">Urdu Category</label>
+                                        <div class="list-group-item" ng-repeat="category in categories track by $index">
+                                            <button class="close pull-right" type="button" style="position: relative; z-index: 20;" ng-click="deleteContentArray('categories',$index)" ng-hide="form.readonly">
+                                                <span aria-hidden="true">×</span>
+                                                <span class="sr-only">Close</span>
+                                            </button>
+                                            <input type="text" class="form-control" ng-model="category.name" required/>
+                                        </div>
+                                        <button class="btn btn-default pull-right" ng-click="addContentArray('categories')">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="content__keywords">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group col-ur">
+                                        <label for="keywords">Urdu Keywords</label>
+                                        <div class='list-group-item' ng-repeat="keyword in keywords track by $index">
+                                            <button class="close pull-right" type="button" style="position: relative; z-index: 20;" ng-click="deleteContentArray('keywords',$index)" ng-hide="form.readonly">
+                                                <span aria-hidden="true">×</span>
+                                                <span class="sr-only">Close</span>
+                                            </button>
+                                            <input type="text" class="form-control" ng-model="keyword.name" required/>
+                                        </div>
+                                        <button class="btn btn-default pull-right" ng-click="addContentArray('keywords')">
+                                            <i class="glyphicon glyphicon-plus"></i>
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="content__status">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group col-ur">
+                                        <label for="status">Status</label>
+                                        <select name="status"
+                                                class="form-control"
+                                                id="status"
+                                                data-ng-options="s as s for s in ['draft', 'open', 'closed']"
+                                                data-ng-model="journal2.content.status"
+                                                required>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 newJournal__action">
+                        <button class="btn btn-primary" data-ng-click="create()" data-ng-class="{disabled: !newJournal.$valid}" data-ng-if="isCreating">Create</button>
+                        <button class="btn btn-primary" data-ng-click="update()" data-ng-class="{disabled: !newJournal.$valid}" data-ng-if="!isCreating">Save</button>
+                    </div>
+
+        </form>
+    </section>
+</section>

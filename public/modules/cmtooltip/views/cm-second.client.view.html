@@ -1,0 +1,49 @@
+<section class="cm-tooltip-2" data-ng-controller="CMTooltip2Controller" data-ng-init="initShow()">
+	<div class="col-sm-12">
+		<div class="row">
+			<div class="col-sm-12">
+				<button class="btn" data-ng-click="showHighlight()" data-ng-if="chHighlight" title="Highlight"><i class="glyphicon glyphicon-th-list inverse-icon"></i></button>
+				<button class="btn" data-ng-click="showHighlight()" data-ng-if="!chHighlight" disabled><i class="glyphicon glyphicon-th-list inverse-icon"></i></button>
+
+				<button class="btn" data-ng-click="showComment()" data-ng-if="chComment" title="Comment"><i class="glyphicon glyphicon-comment"></i></button>
+				<button class="btn" data-ng-click="showComment()" data-ng-if="!chComment" disabled><i class="glyphicon glyphicon-comment"></i></button>
+
+				<button class="btn" data-ng-if="chBookmark" title="Bookmark"><i class="glyphicon glyphicon-bookmark"></i></button>
+				<button class="btn" data-ng-if="!chBookmark" disabled><i class="glyphicon glyphicon-bookmark"></i></button>
+			</div>
+		</div>
+		<div class="row" data-ng-show="chHighlight">
+			<small>
+				<form name="highlightFormUpdate" data-ng-submit="updateHighlight()" novalidate>
+					<fieldset>
+							<div class="col-sm-8">
+								<input type="checkbox" name="isPrivateH" id="isPrivateH" data-ng-model="isPrivateH" checked="true"> Private
+							</div>
+							<br>
+							<div class="col-xs-6">
+		                    	<input type="submit" class="btn btn-xs" value="Update">
+		                	</div>
+		   			</fieldset>
+				</form>
+			</small>
+		</div>
+		<div class="row" data-ng-show="chComment">
+			<small>
+				<form name="CommentFormUpdate" data-ng-submit="updateComment()" novalidate>
+					<fieldset>
+							<div class="col-sm-8">
+								<input type="checkbox" name="isPrivateC" id="isPrivateC" data-ng-model="isPrivateC" checked="true"> Private comment
+							</div>
+							<br>
+							<div class="col-sm-12">
+								<input type="text" id="commentC" name="commentC" data-ng-model="commentC">
+							</div>
+							<div class="col-xs-6">
+		                    	<input type="submit" class="btn btn-xs" value="Update">
+		                	</div>
+		   			</fieldset>
+				</form>
+			</small>
+		</div>
+	</div>
+</section>

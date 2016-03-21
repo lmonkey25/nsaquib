@@ -1,0 +1,50 @@
+<section class="cm-tooltip-1" data-ng-controller="CMTooltip1Controller" data-ng-init="initShow()">
+	<div class="col-sm-12">
+		<div class="row">
+			<div class="col-sm-12" data-ng-show="chShowButtons">
+				<button class="btn" data-ng-click="showHighlight()" title="Highlight"><i class="glyphicon glyphicon-th-list inverse-icon"></i></button>
+				<button class="btn" data-ng-click="showComment()" title="Comment"><i class="glyphicon glyphicon-comment"></i></button>
+				<button class="btn" title="Bookmark" data-ng-click="createBookmark()"><i class="glyphicon glyphicon-bookmark"></i></button>
+				<button class="btn" title="Share Facebook" data-ng-click="createFacebook()"><i class="fa fa-facebook"></i></button>
+				<button class="btn" title="Share Twitter" data-ng-click="createTwitter()"><i class="fa fa-twitter"></i></button>
+			</div>
+		</div>
+		<div id="loginTooltip" class="col-sm-12" data-ng-show="!chShowButtons">
+			<a href="#" data-ng-click="openModal()">Sign up now!</a>
+		</div>
+		<div class="row" data-ng-show="chHighlight">
+			<small>
+				<form name="highlightForm" data-ng-submit="createHighlight()" novalidate>
+					<fieldset>
+							<div class="col-sm-6">
+								<input type="checkbox" name="isPrivateH" id="isPrivateH" data-ng-model="isPrivateH" checked="true"> Private
+							</div>
+							<br>
+							<div class="col-xs-6">
+		                    	<input type="submit" class="btn btn-xs" value="Create">
+		                	</div>
+		   			</fieldset>
+				</form>
+			</small>
+		</div>
+		<div class="row" data-ng-show="chComment">
+			<small>
+				<form name="CommentForm" data-ng-submit="createComment()" novalidate>
+					<fieldset>
+							<div class="col-sm-6">
+								<input type="checkbox" name="isPrivateC" id="isPrivateC" data-ng-model="isPrivateC" checked="true"> Private
+							</div>
+							<br>
+							<div class="col-sm-12">
+								Comment
+								<input type="text" id="commentC" name="commentC" data-ng-model="commentC">
+							</div>
+							<div class="col-xs-6">
+		                    	<input type="submit" class="btn btn-xs" value="Create">
+		                	</div>
+		   			</fieldset>
+				</form>
+			</small>
+		</div>
+	</div>
+</section>
